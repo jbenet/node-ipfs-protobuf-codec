@@ -1,0 +1,4 @@
+
+message Foo {
+  optional string text = 1;
+}
