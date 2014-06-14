@@ -52,6 +52,15 @@ Codec.prototype.wrapDuplexStream = function(stream) {
 
 Codec.fromProtoSrc = function(src) {
   var result = protobuf.loadProto(src).result
-  var protos = result.messages || result
+  var protos = filter(result.messages || result)
   return map(protos, Codec)
+}
+
+function filter(inp) {
+  var out = {}
+  for (var p in inp) {
+    if (typeof(inp[p]) === 'function')
+      out[p] = inp[p]
+  }
+  return out
 }
