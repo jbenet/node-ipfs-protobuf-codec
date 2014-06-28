@@ -1,5 +1,6 @@
 var map = require('map-values')
 var protobuf = require('protobufjs')
+var segment = require('pipe-segment')
 var protobufStream = require('protobufjs-stream')
 var transDuplex = require('duplex-transform')
 
@@ -48,6 +49,19 @@ Codec.prototype.wrapDuplexStream = function(stream) {
     this.push(self.decode(item))
     next()
   }
+}
+
+// must implement
+Codec.prototype.createPipeSegment = function() {
+  var self = this
+
+  var encode = this.createEncodeStream()
+  var decode = this.createDecodeStream()
+
+  return segment({
+    decoded: duplexer2(encode, decode),
+    encoded: duplexer2(decode, encode),
+  })
 }
 
 Codec.fromProtoSrc = function(src) {
