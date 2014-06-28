@@ -26,3 +26,10 @@ var encodedWireStream = PassThrough()
 var stream3 = Foo.wrapDuplexStream(encodedWireStream)
 stream3.on('data', console.log)
 stream3.write({text: "Boz"})
+
+// pipe segment with en/decoding
+var encodedWireStream2 = PassThrough()
+var stream4 = Foo.createPipeSegment()
+stream4.encoded.pipe(encodedWireStream2).pipe(stream4.encoded)
+stream4.on('data', console.log)
+stream4.write({text: "Boz"})
