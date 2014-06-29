@@ -3,7 +3,7 @@ var protobuf = require('protobufjs')
 var segment = require('pipe-segment')
 var protobufStream = require('protobufjs-stream')
 var transDuplex = require('duplex-transform')
-var duplexer2 = require('duplexer2')
+var duplexer2 = require('duplexer2.jbenet')
 
 module.exports = Codec
 
