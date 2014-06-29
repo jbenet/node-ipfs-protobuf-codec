@@ -60,8 +60,8 @@ Codec.prototype.createPipeSegment = function() {
   var decode = this.createDecodeStream()
 
   return segment({
-    decoded: duplexer2(encode, decode),
-    encoded: duplexer2(decode, encode),
+    decoded: duplexer2({objectMode: true}, encode, decode),
+    encoded: duplexer2({objectMode: true}, decode, encode),
   })
 }
 
